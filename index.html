@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lideres Giro d’Italia</title>
+  <meta http-equiv="refresh" content="180">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 630px;
+      width: 2114px;
+      font-family: 'Open Sans', sans-serif;
+      position: relative;
+    }
+
+    video#fondo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .tabla {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      font-weight: Bold;
+	  text-transform: uppercase;
+      color: #ffa1ce;
+      font-family: Open Sans, sans-serif;
+	  font-style: italic;
+    }
+
+    .fila {
+      position: absolute;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    /* Posiciones personalizadas */
+    #Rosa, #Ciclamino, #Azurra,
+    #Bianca {
+      position: absolute;
+      font-size: 50px;
+      background-color: transparent;
+      padding: 2px 6px;
+      border-radius: 5px;
+      line height:100%;
+    }
+
+    /* FILA 1 */
+    #Rosa { top: 460px; left: 550px; }
+    #Ciclamino { top: 460px; left: 950px; }
+    #Azurra { top: 460px; left: 1350px; }
+    #Bianca { top: 460px; left: 1800px; }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="fondo">
+    <source src="fondo.mp4" type="video/mp4">
+    Tu navegador no soporta el video.
+  </video>
+
+  <div class="tabla">
+    <div id="Rosa">---</div>
+    <div id="Ciclamino">---</div>
+    <div id="Azurra">---</div>
+    <div id="Bianca">---</div>
+  </div>
+
+  <script>
+  async function cargarDatos() {
+    try {
+      const res = await fetch("https://dannaico.github.io/MLideres/datos.html");
+      const texto = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(texto, "text/html");
+
+      document.getElementById("Rosa").innerHTML = doc.getElementById("Rosa").innerHTML;
+      document.getElementById("Ciclamino").innerHTML = doc.getElementById("Ciclamino").innerHTML;
+      document.getElementById("Azurra").innerHTML = doc.getElementById("Azurra").innerHTML;
+      document.getElementById("Bianca").innerHTML = doc.getElementById("Bianca").innerHTML;
+      
+    } catch (err) {
+      console.error("Error cargando los datos:", err);
+    }
+  }
+
+  cargarDatos();
+  setInterval(cargarDatos, 30000);
+</script>
+</body>
+</html>
